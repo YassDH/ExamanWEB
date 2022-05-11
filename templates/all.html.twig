@@ -16,6 +16,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ i.student }}</h5>
                     <p class="card-text">{{ i.entreprise }}</p>
+                    <a href="{{ path('pfe_show',{id : i.id}) }}" class="btn btn-light">Afficher PFE</a>
                 </div>
             </div>
         {% endfor %}
