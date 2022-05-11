@@ -20,7 +20,7 @@ class Pfe
     private $student;
 
     #[ORM\ManyToOne(targetEntity: Entreprise::class)]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private $entreprise;
 
     public function getId(): ?int

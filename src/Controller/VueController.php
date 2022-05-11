@@ -26,24 +26,23 @@ class VueController extends AbstractController
             $this->addFlash('success', 'La Pfe a été ajoutée');
 
             $manager->flush();
-            return $this->redirectToRoute('pfe_show');
+            return $this->render('vue/profile.html.twig',[
+                'profile' => $pfe
+            ]);
         }
-
-
-
         return $this->render('vue/index.html.twig', [
             'formView' => $form->createView(),
         ]);
     }
         #[Route('/vue/{id?0}', name: 'pfe_show')]
     public function showPfe($id, ManagerRegistry $doctrine): Response{
-        if($id == 0){
+        $manager = $doctrine->getRepository(Pfe::class);
+        $result = $manager->find($id);
+
+        if(!$result){
             $this->addFlash('error', "Cette Pfe n'existe pas");
             return $this->redirectToRoute('app_vue');
         }
-        $manager = $doctrine->getRepository(Pfe::class);
-
-        $result = $manager->find($id);
 
         return $this->render('vue/profile.html.twig',[
             'profile' => $result
@@ -51,19 +50,33 @@ class VueController extends AbstractController
 
 
     }
-    #[Route('/', name: 'pfe_main')]
+    #[Route('/stats', name: 'pfe_main')]
     public function Main(ManagerRegistry $doctrine){
 
-        $personne = $doctrine->getRepository(Pfe::class);
+        $pfe = $doctrine->getRepository(Pfe::class);
         $entreprise = $doctrine->getRepository(Entreprise::class);
+        $result = $pfe->findNbPfe();
 
-        $ent = $entreprise->findAll();
-
-        foreach (){
-
+        $nameTab = [];
+        for($i = 0 ; $i<sizeof($result) ;$i++ ){
+            $nameTab[$i] = $entreprise->find($result[$i]["entr"])->getDesignation();
         }
 
+        return $this->render('main.html.twig', [
+            'data'=> $result,
+            'name' => $nameTab
+        ]);
+    }
 
-        return $this->render('main.html.twig');
+    #[Route('/', name: 'pfe_all')]
+    public function All(ManagerRegistry $doctrine){
+
+        $pfe = $doctrine->getRepository(Pfe::class);
+        $result = $pfe->findAll();
+
+
+        return $this->render('all.html.twig', [
+            'data'=> $result
+        ]);
     }
 }

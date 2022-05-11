@@ -1,22 +1,25 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.css') }}">
-    <title>Document</title>
-</head>
-<body>
-{% for content in app.session.flashBag.get('sucess') %}
-    <div class="alert alert-success" role="alert">
-        {{ content }}
+{% extends 'base.html.twig' %}
+
+{% block Title %}
+    TP : Profile
+{% endblock %}
+
+{% block Body %}
+
+    {% for content in app.session.flashBag.get('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ content }}
+        </div>
+    {% endfor %}
+    <div class="starter-template">
+        <div class="card" style="width: 18rem;padding-top: 1rem;">
+            <img class="rounded-circle w-50 h-50 m-auto" src="https://icon-library.com/images/user-icon-image/user-icon-image-25.jpg" alt="">
+            <hr>
+            <div class="card-body">
+                <h5 class="card-title">{{ profile.student }}</h5>
+                <p class="card-text">Passe la PFE : <b>{{ profile.title }}</b><br>Chez l'entreprise : <b>{{ profile.entreprise.designation }}</b></p>
+            </div>
+        </div>
     </div>
-{% endfor %}
-<div class="alert alert-success" role="alert">
-    {{ profile.student }} a la pfe : {{ profile.title }} chez l'entreprise : {{ profile.entreprise }}
-</div>
-</body>
-</html>
+{% endblock %}
 

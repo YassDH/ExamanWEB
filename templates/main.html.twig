@@ -1,8 +1,27 @@
-{% block body %}
+{% extends 'base.html.twig' %}
 
+{% block Title %}
+    TP : Stats
 {% endblock %}
 
-{% block title %}
-
+{% block Body %}
+    <div class="alert alert-info">
+        Nombre de Pfe par entreprise
+    </div>
+    <div class="row">
+    {% for i in data %}
+        {% if loop.index is odd %}
+            {% set bg="primary" %}
+        {% else %}
+            {% set bg="secondary" %}
+        {% endif %}
+        <div class="card text-white bg-{{ bg }} mb-3" style="width: 18rem;margin: 10px;">
+            <div class="card-header">{{ name[ loop.index0 ] }}</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ i.nombre }} Pfe(s)</h5>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}
 

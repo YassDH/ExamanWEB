@@ -14,13 +14,15 @@ class PfeFixture extends Fixture
     {
 
         $faker = Factory::create('fr_FR');
+        $entreprise = $manager->getRepository(Entreprise::class);
+        $ent = $entreprise->findAll();
 
-        for($i=0; $i<10; $i++){
+        for($i=0; $i<100; $i++){
             $person = new Pfe();
 
             $person->setTitle("Pfe".$i);
             $person->setStudent($faker->firstName." ".$faker->name);
-
+            $person->setEntreprise($ent[array_rand($ent)]);
 
             $manager->persist($person);
         }

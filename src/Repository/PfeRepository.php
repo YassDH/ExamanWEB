@@ -75,4 +75,13 @@ class PfeRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findNbPfe()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id) as nombre, IDENTITY(p.entreprise) as entr')
+            ->groupBy('p.entreprise')
+            ->getQuery()
+            ->getScalarResult()
+            ;
+    }
 }
